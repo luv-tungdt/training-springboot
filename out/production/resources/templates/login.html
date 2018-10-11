@@ -39,7 +39,7 @@
             <tr align="left">
                 <td class="lbl_left">Mã số thẻ bảo hiểm:</td>
                 <td align="left">
-                    <input class="txBox" type="password" name="password" value="" size="20"
+                    <input th:field="*{insuranceNumber}" value="" size="20"
                            onfocus="this.style.borderColor='#0066ff';"
                            onblur="this.style.borderColor='#aaaaaa';"/>
                 </td>
@@ -47,7 +47,7 @@
             <tr align="left">
                 <td class="lbl_left">Nơi đăng ký:</td>
                 <td align="left">
-                    <input class="txBox" type="password" name="password" value="" size="20"
+                    <input th:field="*{register}" value="" size="20"
                            onfocus="this.style.borderColor='#0066ff';"
                            onblur="this.style.borderColor='#aaaaaa';"/>
                 </td>
@@ -128,7 +128,31 @@
         <!--</tr>-->
         <!--</c:if>-->
     </table>
-
+    <!--<div th:if="${}">-->
+    <!--<div ></div>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<c:if th:if="${totalPaging > 1}">-->
+                <!--<td class="lbl_paging"><c:if test="${pagingFirst > limitPage}">-->
+                    <!--<a-->
+                            <!--href="ListUser.do?type=page&pageType=${pagingFirst - limitPage}">&lsaquo;&lsaquo;</a>-->
+                <!--</c:if> <c:forEach items="${listPages}" var="Paging">-->
+                    <!--<c:if test="${Paging == currentPage}">-->
+                        <!--<span>${currentPage} &nbsp;&#124;</span>-->
+                    <!--</c:if>-->
+                    <!--<c:if test="${Paging != currentPage}">-->
+                        <!--<a href="ListUser.do?type=page&pageType=${Paging}">${Paging}</a>-->
+                        <!--&nbsp;&#124;-->
+                    <!--</c:if>-->
+                <!--</c:forEach> <c:if test="${pagingFirst +limitPage <= totalPaging}">-->
+                    <!--<a href="ListUser.do?type=page&pageType=${pagingFirst +limitPage}">&rsaquo;&rsaquo;</a>-->
+                <!--</c:if></td>-->
+            <!--</c:if>-->
+        <!--</tr>-->
+    <!--</table>-->
+    <!--</div>-->
 </div>
 </body>
 </html>

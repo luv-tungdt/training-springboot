@@ -39,9 +39,8 @@ public  class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<TblUser> search(String userFullName) {
-		System.out.println("userFullName"+ userFullName);
-		return searchUser.search(userFullName);
+	public List<TblUser> search(String userFullName, String insuranceNumber, String register) {
+		return searchUser.search(userFullName,insuranceNumber,register);
 	}
 
 

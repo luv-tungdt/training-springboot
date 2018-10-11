@@ -30,7 +30,7 @@ public class TblCompany {
     private Set<TblUser> listUser= new HashSet<>();
 
     public TblCompany(){
-        
+
     }
 
     public TblCompany(int id, String name, String address, String email, String tel, Set<TblUser> listUser) {

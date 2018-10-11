@@ -46,12 +46,12 @@ public class HomeController {
 		List<TblUser> tblUserList = userService.findByUserFullName("dangthanhtung");
 		List<TblUser> tblUserList1 =
 				userService.findByUserFullNameAndInsuranceNumberAndregister("dangthanhtung", "1900123434", "Phúc Thọ");
-		System.out.println("11111111111" + tblUserList.get(0).getUsername());
+		System.out.println("11111111111" + tblUserList.get(0).getUserFullName());
 		modelAndView.addObject("tblUserList1", tblUserList1);
 		String userFullName = searchForm.getUserFullName();
-		System.out.println("tung"+userFullName);
-		List<TblUser> tblUserList2= userService.search(searchForm.getUserFullName());
-//		System.out.println("222222222222222"+searchForm.getUserFullName());
+		System.out.println("tung88888888888888"+userFullName);
+		List<TblUser> tblUserList2= userService.search(searchForm.getUserFullName(),searchForm.getInsuranceNumber(),searchForm.getRegister());
+		System.out.println("222222222222222"+searchForm.getUserFullName());
 		modelAndView.addObject("tblUserList2",tblUserList2);
 		modelAndView.setViewName("login");
 		return modelAndView;

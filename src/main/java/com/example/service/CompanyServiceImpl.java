@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.dao.CompanyRepository;
 import com.example.model.TblCompany;
 
-@Service
+@Service("CompanyService")
 public class CompanyServiceImpl implements CompanyService {
 	
 	@Autowired

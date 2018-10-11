@@ -16,6 +16,6 @@ public interface UserService {
 	List<TblUser> findByUserFullNameAndInsuranceNumberAndregister(String userFullName, String insuranceNumber,
 			String register);
 	
-	List<TblUser> search(String userFullName);
+	List<TblUser> search(String userFullName, String insuranceNumber, String register);
 	
 }
