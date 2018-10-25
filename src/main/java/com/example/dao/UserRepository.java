@@ -9,15 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.example.model.TblUser;
 @Repository
 public interface UserRepository extends JpaRepository<TblUser, Integer> {
-	
+	/**
+	 * get all information of TblUser
+	 *
+	 * @return list user
+	 */
 	List<TblUser> findAll();
-	
-	@Query("SELECT t From TblUser t WHERE t.userFullName=?1 AND t.tblInsurance.numberInsurance=?2 AND t.tblInsurance.register=?3")
-	List<TblUser>findByUserFullNameAndInsuranceNumberAndregister(String userFullName,String insuranceNumber,String register);
 
-
-	@Query("SELECT  t from TblUser t where t.userFullName = ?1")
-	List<TblUser> findByUserFullName(String userFullName);
 
 
 }

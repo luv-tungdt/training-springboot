@@ -1,183 +1,276 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title></title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/JavaScript.js"></script>
 </head>
 <body>
-
-<table class="tbl_input" border="0" width="50%" cellpadding="0"
-       cellspacing="0">
-    <tr>
-        <th align="left">
-            <div style="padding-left: 100px;">Cập nhật thông tin thẻ bảo hiểm</div>
-        </th>
-    </tr>
-    <tr>
-
-        <th align="left">
-            </br>
-            <div style="padding-left: 100px;"><input class="btn" type="button" value="Quay lại"
-                   onclick="javascript:window.location.href='ListUser.do?type=back'" />
-        </th>
-    </tr>
-
-    <tr>
-        <td class="errMsg">
-            <div style="padding-left: 120px">&nbsp;</div>
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            <div style="padding-left: 100px;">
-                <table border="0" width="100%" cellpadding="4"
-                       cellspacing="0">
-                    <tr>
-                        <td class="lbl_left" >Mã số thẻ bảo hiểm:</td>
-                        <!--<tr th:each="insurance:${insurances}"-->
-                        <td align="left"><input class="txBox" type="text"
-                                                name="loginName" value=""
-                                                size="15" onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" />
-
-                        </td>
-                        <!--</tr>-->
-                    <tr>
-                        <td class="lbl_left"></font> Họ và Tên:</td>
-                        <td align="left"><input class="txBox" type="text"
-                                                name="loginName" value=""
-                                                size="15" onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" />
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> Giới tính:</td>
-                        <td align="left" >
-                            <select th:field="*{user_sex_division}" >
-                                <option value=""> -- </option>
-                                <option th:each="country : ${countries}"
-                                        th:value="${country.countryId}"
-                                        th:utext="${country.countryName}"/>
-                            </select>
-
-                        </td>
-
-
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="lbl_left">Ngày sinh:</td>
-                        <td align="left"><input class="txBox" type="text"
-                                                name="loginName" value=""
-                                                size="15" onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" />
-
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> </td>
-                        <td align="left"><input type="radio"
-                                                th:field="*{radioButtonSelectedValue}"
-                                                th:value="${radioValue}"/> Công ty đã có
-
-
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> Tên công ty:</td>
-                        <td align="left" >
-                            <select th:field="*{user_sex_division}" >
-                                <option value=""> -- </option>
-                                <option th:each="country : ${countries}"
-                                        th:value="${country.countryId}"
-                                        th:utext="${country.countryName}"/>
-                            </select>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> </td>
-                        <td align="left"><input type="radio"
-                                                th:field="*{radioButtonSelectedValue}"
-                                                th:value="${radioValue}"/> Đăng kí công ty mới
-                    </tr>
-                    <div>
-                    <tr>
-                        <td > </td>
-                        <td ></font> Tên công ty:</td>
-                        <td ><input type="text"/>
-                        </td>
-
-                    </tr>
-                        <tr>
-                            <td > </td>
-                            <td ></font> Địa chỉ:</td>
-                            <td ><input type="text"/>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td > </td>
-                            <td ></font> Email:</td>
-                            <td ><input type="text"/>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td > </td>
-                            <td ></font> Điện thoại:</td>
-                            <td ><input type="text"/>
-                            </td>
-
-                        </tr>
-                    </div>
-
-                    <tr>
-                    <td class="lbl_left"> Nơi đăng kí KCB:</td>
-                    <td align="left"><input class="txBox" type="text"
-                                            name="loginName" value=""
-                                            size="15" onfocus="this.style.borderColor='#0066ff';"
-                                            onblur="this.style.borderColor='#aaaaaa';" />
-
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="lbl_left">Ngày bắt đầu thẻ BH:</td>
-                        <td align="left"><input class="txBox" type="text"
-                                                name="loginName" value=""
-                                                size="15" onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" />
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left">Ngày kết thúc thẻ BH:</td>
-                        <td align="left"><input class="txBox" type="text"
-                                                name="loginName" value=""
-                                                size="15" onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" />
-
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-        </td>
-    </tr>
-</table>
-<div style="padding-left: 100px;">&nbsp;</div>
-<!-- Begin vung button -->
-<div style="padding-left: 45px;">
-    <table border="0" cellpadding="4" cellspacing="0" width="300px">
+<form th:action="@{/add}" th:object="${userForm}" method="post">
+    <table border="0" width="100%" class="tbl_input" cellpadding="4"
+           cellspacing="0">
+        <tr class="tbl_input" border="0" width="50%" cellpadding="0"
+            cellspacing="0">
         <tr>
-            <th width="200px" align="center">&nbsp;</th>
-            <td><input class="btn" type="submit" value="Xóa" /></td>
-            <td><input class="btn" type="button" value="Cập nhật"
-                       onclick="javascript:window.location.href='ListUser.do?type=back'" /></td>
+            <th align="left">
+                <div style="padding-left: 100px;">Thêm mới thông tin thẻ bảo hiểm</div>
+            </th>
+        </tr>
+        <tr>
+            <th:block th:each="err:${listError}">
+        <tr>
+            <td th:text="${err}" style="color:red" ></td>
+        </tr>
+        </th:block>
+        </tr>
+
+
+        <tr>
+            <td align="left">
+                <div style="padding-left: 100px;">
+                    <table border="0" width="500px" class="tbl_input" cellpadding="4"
+                           cellspacing="0">
+                        <tr>
+                            <td class="lbl_left">Mã số thẻ bảo hiểm:</td>
+                            <!--<tr th:each="insurance:${insurances}"-->
+                            <td align="left"><input class="txBox" type="text"
+                                                    name="loginName" value=""
+                                                    size="20" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{insuranceNumber}"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"> Họ và Tên:</td>
+                            <td align="left"><input class="txBox" type="text"
+                                                    name="loginName" value=""
+                                                    size="20" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{userFullName}"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"> UserName:</td>
+                            <td align="left"><input class="txBox" type="text"
+                                                    name="loginName" value=""
+                                                    size="20" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{userName}"/>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="lbl_left"> Password:</td>
+                            <td align="left"><input class="txBox" type="text"
+                                                    name="loginName" value=""
+                                                    size="20" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{password}"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"> Giới tính:</td>
+                            <td align="left">
+                                <select th:field="*{userSexDivision}">
+                                    <option th:value="'1'" th:text="Nam"></option>
+                                    <option th:value="'2'" th:text="Nữ"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">Ngày sinh:</td>
+                            <td align="left"><input class="txBox _datepicker" type="text" th:field="*{birthDay}"/></td>
+
+                        </tr>
+                        <tr th:id="oldCompany">
+                            <td class="lbl_left"></td>
+                            <td align="left"><input th:field="*{flagCompany}" type="radio" value="old" /> Công ty đã có</td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">Công ty:</td>
+                            <td align="left">
+                                <select th:field="*{companyId}" th:class="oldCompany1">
+                                    <option th:each="company:${listCompany}" th:value="${company.id}"
+                                            th:utext="${company.name}">
+
+                                    </option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <table th:class="info_old">
+                                    <tr>
+                                        <td>Tên công ty:</td>
+                                        <td id="_name"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td > Địa chỉ:</td>
+                                        <td id="_address"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td> Email:</td>
+                                        <td id="_email"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td> Điện thoại:</td>
+                                        <td id="_tel"></td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <!--Phần đăng mới mới công ty-->
+                        <tr>
+                            <td class="lbl_left"></td>
+                            <td align="left"><input type="radio" th:field="*{flagCompany}" th:value="new"/> Đăng
+                                kí công ty mới
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <table th:id="newCompany">
+                                    <tr>
+                                        <td></td>
+                                        <td>Tên công ty:</td>
+                                        <td><input type="text" th:field="*{companyName}"/>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td> Địa chỉ:</td>
+                                        <td><input type="text" th:field="*{address}"/>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td> Email:</td>
+                                        <td><input type="text" th:field="*{email}"/>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td> Điện thoại:</td>
+                                        <td><input type="text" th:field="*{tel}"/>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left"> Nơi đăng kí KCB:</td>
+                            <td align="left"><input class="txBox" type="text"
+                                                    name="loginName" value=""
+                                                    size="20" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{register}"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">Ngày bắt đầu thẻ BH:</td>
+                            <td align="left"><input class="txBox _datepicker" type="text"
+                                                    name="loginName" value=""
+                                                    size="15" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{startDate}"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lbl_left">Ngày kết thúc thẻ BH:</td>
+                            <td align="left"><input class="txBox _datepicker" type="text"
+                                                    name="loginName" value=""
+                                                    size="15" onfocus="this.style.borderColor='#0066ff';"
+                                                    onblur="this.style.borderColor='#aaaaaa';" th:field="*{endDate}"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <div style="padding-left: 100px;">&nbsp;</div>
+        <!-- Begin vung button -->
+        <div style="padding-left: 45px;">
+            <table border="0" cellpadding="4" cellspacing="0" width="300px">
+                <tr>
+                    <th width="200px" align="center">&nbsp;</th>
+                    <td><input type="button" onclick="location.href='/home'" value="Hủy"/></td>
+                    <td><input class="btn" type="submit" value="Đăng Ký"/></td>
+                </tr>
+            </table>
+        </div>
         </tr>
     </table>
-</div>
+</form>
 </body>
+<!--<script>-->
+
+<!--$(function () {-->
+<!--console.log("ready!");-->
+
+<!--$(".btn_wider").click(function () {-->
+<!--console.log("ready!5555555555");-->
+<!--window.location.href = "exportCSV";-->
+<!--});-->
+
+<!--$(".addUser").click(function () {-->
+<!--console.log("ready!5555555555");-->
+<!--window.location.href = "add";-->
+<!--});-->
+<!--$("._datepicker").datepicker();-->
+
+<!--$('input:radio[name=flagCompany]:checked').change(function () {-->
+<!--var val = $(this).val();-->
+<!--if (val == "old") {-->
+<!--// $('#newCompany').hide();-->
+<!--console.log("BBBB");-->
+<!--//$("div th:id="newCompany").hide();-->
+<!--//     $('#oldCompany1').show();-->
+<!--//     $('#oldCompany2').show();-->
+<!--//     $('#oldCompany3').show();-->
+<!--//     $('#oldCompany4').show();-->
+<!--//     $('#newCompany1').hide();-->
+<!--//     $('#newCompany2').hide();-->
+<!--//     $('#newCompany3').hide();-->
+<!--//     $('#newCompany4').hide();-->
+
+<!--$('#newCompany').hide();-->
+<!--}-->
+<!--console.log("AAAÂ1", val);-->
+<!--});-->
+<!--$(".oldCompany1").change(function () {-->
+<!--var companyId = $(this).val();-->
+<!--console.log(companyId);-->
+<!--fire_ajax_submit(companyId);-->
+
+<!--});-->
+
+<!--function fire_ajax_submit(companyId) {-->
+<!--var url = "/getCompanyInforById/" + companyId;-->
+<!--console.log("88888888"+companyId);-->
+<!--$.ajax({-->
+<!--type: "GET",-->
+<!--url: url,-->
+<!--success: function (data) {-->
+<!--console.log("77777777777777");-->
+<!--}-->
+<!--});-->
+<!--}-->
+
+<!--});-->
+
+
+<!--</script>-->
 </html>

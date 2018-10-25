@@ -2,18 +2,14 @@ package com.example.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "tbl_company")
-public class TblCompany {
+public class TblCompany{
     @Id
     @Column(name = "company_internal_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,20 +22,16 @@ public class TblCompany {
     private String email;
     @Column(name = "telephone",length = 15)
     private String tel;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy ="tblCompany")
-    private Set<TblUser> listUser= new HashSet<>();
 
-    public TblCompany(){
 
-    }
+    public TblCompany(){ }
 
-    public TblCompany(int id, String name, String address, String email, String tel, Set<TblUser> listUser) {
+    public TblCompany(int id, String name, String address, String email, String tel) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.tel = tel;
-        this.listUser = listUser;
     }
 
     public int getId() {
@@ -82,11 +74,4 @@ public class TblCompany {
         this.tel = tel;
     }
 
-    public Set<TblUser> getListUser() {
-        return listUser;
-    }
-
-    public void setListUser(Set<TblUser> listUser) {
-        this.listUser = listUser;
-    }
 }

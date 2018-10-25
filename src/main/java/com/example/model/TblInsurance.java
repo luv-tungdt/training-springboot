@@ -1,5 +1,7 @@
 package com.example.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,8 +29,6 @@ public class TblInsurance {
     private Date endDate;
     @Column(name = "place_of_register")
     private String register;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy ="tblInsurance")
-    private Set<TblUser> listUser= new HashSet<>();
 
     public  TblInsurance(){
 
@@ -39,7 +39,6 @@ public class TblInsurance {
         this.startDate = startDate;
         this.endDate = endDate;
         this.register = register;
-        this.listUser = listUser;
     }
 
     public int getId() {
@@ -57,7 +56,7 @@ public class TblInsurance {
     public void setNumberInsurance(String numberInsurance) {
         this.numberInsurance = numberInsurance;
     }
-
+    @DateTimeFormat(pattern = "dd-MMM-YYYY" )
     public Date getStartDate() {
         return startDate;
     }
@@ -65,7 +64,7 @@ public class TblInsurance {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-
+    @DateTimeFormat(pattern="dd-MMM-YYYY")
     public Date getEndDate() {
         return endDate;
     }
@@ -82,11 +81,5 @@ public class TblInsurance {
         this.register = register;
     }
 
-    public Set<TblUser> getListUser() {
-        return listUser;
-    }
 
-    public void setListUser(Set<TblUser> listUser) {
-        this.listUser = listUser;
-    }
 }

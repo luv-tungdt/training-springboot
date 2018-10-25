@@ -1,12 +1,14 @@
 package com.example.form;
 
-public class SearchForm {
+import java.io.Serializable;
+
+public class SearchForm implements Serializable{
 	
 	private String userFullName;
 	private String insuranceNumber;
 	private String register;
-
-
+    private int companyId;
+    public SearchForm(){}
 	public String getUserFullName() {
 		return userFullName;
 	}
@@ -29,5 +31,13 @@ public class SearchForm {
 
 	public void setRegister(String register) {
 		this.register = register;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 }

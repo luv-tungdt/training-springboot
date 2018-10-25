@@ -8,11 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "tbl_user")
-public class TblUser {
+public class TblUser implements Serializable{
     @Id
     @Column(name = "user_internal_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +31,19 @@ public class TblUser {
     @Column(name = "user_full_name", length = 50, nullable = false)
     private String userFullName;
     @Column(name = "user_sex_division", length = 2, nullable = false)
-    private char[] userSexDivision;
+    private char userSexDivision;
     @Column(name = "birthdate")
     private Date date;
     public TblUser(){
 
     }
 
-    public TblUser(int id, TblCompany tblCompany, TblInsurance tblInsurance, String username, String password, String userFullName, char[] userSexDivision, Date date) {
+    public TblUser(String userFullName, Date date) {
+        this.userFullName = userFullName;
+        this.date = date;
+    }
+
+    public TblUser(int id, TblCompany tblCompany, TblInsurance tblInsurance, String username, String password, String userFullName, char userSexDivision, Date date) {
         this.id = id;
         this.tblCompany = tblCompany;
         this.tblInsurance = tblInsurance;
@@ -98,15 +104,15 @@ public class TblUser {
 
     public String getUserSexDivision() {
         String sex = String.valueOf(userSexDivision);
-        if(sex.equals("01")){
-            sex = "Nam";
+        if(sex.equals("1")){
+            sex = "1";
         }else{
-            sex = "Nữ";
+            sex = "2";
         }
         return sex;
     }
 
-    public void setUserSexDivision(char[] userSexDivision) {
+    public void setUserSexDivision(char userSexDivision) {
         this.userSexDivision = userSexDivision;
     }
 

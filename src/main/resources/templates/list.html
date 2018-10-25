@@ -1,90 +1,140 @@
-<!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>Person List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/JavaScript.js"></script>
 </head>
 <body>
+<h3>Danh sách thẻ bảo hiểm</h3>
+<div>
+    <table border="1">
+        <h3>Tên công ty</h3>
 
-<table class="tbl_input" border="0" width="50%" cellpadding="0"
-       cellspacing="0">
-    <tr>
-        <th align="left">
-            <div style="padding-left: 100px;">Chi tiết thông tin thẻ bảo hiểm</div>
-        </th>
-    </tr>
-    <tr>
-        <th align="left">
-        <input class="btn" type="button" value="Quay lại"
-                   onclick="javascript:window.location.href='ListUser.do?type=back'" />
-        </th>
-    </tr>
-
-    <tr>
-        <td class="errMsg">
-            <div style="padding-left: 120px">&nbsp;</div>
-        </td>
-    </tr>
-    <tr>
-        <td align="left">
-            <div style="padding-left: 100px;">
-                <table border="1" width="100%" cellpadding="4"
-                       cellspacing="0">
-                    <tr>
-                        <td class="lbl_left" >Mã số thẻ bảo hiểm:</td>
-                         <!--<tr th:each="insurance:${insurances}"-->
-                        <td th:utext="">
-                        </td>
-                    <!--</tr>-->
-                    <tr>
-                        <td class="lbl_left"></font> Họ và Tên:</td>
-                    <td th:utext="">
-                    </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> Giới tính:</td>
-                        <td th:utext="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left">Ngày sinh:</td>
-                        <td th:utext="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> Tên công ty:</td>
-                        <td th:utext="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left"> Nơi đăng kí KCB:</td>
-                        <td th:utext="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="lbl_left">Kỳ hạn thẻ bảo hiểm:</td>
-                        <td align="left"><input class="txBox" type="text"
-                                                name="tel" value="" size="15"
-                                                onfocus="this.style.borderColor='#0066ff';"
-                                                onblur="this.style.borderColor='#aaaaaa';" /></td>
-
-                </table>
-            </div>
-
-        </td>
-    </tr>
-</table>
-<div style="padding-left: 100px;">&nbsp;</div>
-<!-- Begin vung button -->
-<div style="padding-left: 45px;">
-    <table border="0" cellpadding="4" cellspacing="0" width="300px">
-        <tr>
-            <th width="200px" align="center">&nbsp;</th>
-            <td><input class="btn" type="submit" value="Xóa" /></td>
-            <td><input class="btn" type="button" value="Cập nhật"
-                       onclick="javascript:window.location.href='ListUser.do?type=back'" /></td>
-        </tr>
     </table>
+    <form th:action="@{/home}" th:object="${searchForm}" method="get">
+
+        <table class="tbl_input" cellpadding="4" cellspacing="0" width="400px">
+            <select th:field="*{companyId}">
+                <option   th:each="company:${listCompany}" th:value="${company.id}" th:utext="${company.name}" >
+
+                </option>
+            </select>
+
+            <tr>
+                <th width="150px">&nbsp;</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th colspan="2" align="left">Thông tin tìm kiếm</th>
+            </tr>
+
+            <tr align="left">
+                <td class="lbl_left">Tên người sử dụng :</td>
+                <td align="left">
+                    <input th:field="*{userFullName}" class="txBox" type="text" name="loginName" value="" size="20"
+                           onfocus="this.style.borderColor='#0066ff';"
+                           onblur="this.style.borderColor='#aaaaaa';"/>
+                </td>
+            </tr>
+
+            <tr align="left">
+                <td class="lbl_left">Mã số thẻ bảo hiểm:</td>
+                <td align="left">
+                    <input th:field="*{insuranceNumber}" value="" size="20"
+                           onfocus="this.style.borderColor='#0066ff';"
+                           onblur="this.style.borderColor='#aaaaaa';"/>
+                </td>
+            </tr>
+            <tr align="left">
+                <td class="lbl_left">Nơi đăng ký:</td>
+                <td align="left">
+                    <input th:field="*{register}" value="" size="20"
+                           onfocus="this.style.borderColor='#0066ff';"
+                           onblur="this.style.borderColor='#aaaaaa';"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td align="left">
+                    <input class="btn btn_wider" type="submit" value="Tìm kiếm"/>
+                </td>
+            </tr>
+            <tr>
+                <td><input class ="addUser" type="button" value="Đăng ký" th:href="@{/add}"/>
+                </td>
+                <td align="right" ><input class="btn btn_wider" type="button" value="exportCSV"/></td>
+
+            </tr>
+
+        </table>
+    </form>
+
+    <table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
+           width="80%">
+
+        <tr class="tr2">
+            <th align="left">Tên người sử dụng
+                <div th:with="condition=${sort eq 'ASC' }" th:remove="tag">
+                    <span th:if="${condition}">▲</span> <a
+                        th:unless="${condition}"
+                        th:href="@{/home/(sort=ASC)}">
+                    ▲ </a>
+                </div>
+                <div th:with="condition=${sort eq 'DESC'}" th:remove="tag">
+                    <span th:if="${condition}">▼</span> <a
+                        th:unless="${condition}"
+                        th:href="@{/home/(sort=DESC)}">
+                    ▼ </a>
+                </div>
+            </th>
+            <th align="left">Giới tính</th>
+            <th align="left">Ngày sinh</th>
+            <th align="left">Mã số thẻ bảo hiểm</th>
+            <th align="left">Kỳ hạn</th>
+            <th align="left">Nơi đăng kí KCB</th>
+
+        </tr>
+        <div th:if="${userList.size() != 0}">
+        <tr th:each="user : ${userList}">
+            <td th:utext="${user.userFullName}"></td>
+            <td th:utext="${user.userSexDivision}"></td>
+            <td th:utext="${#dates.format(user.date, 'dd/MM/yyyy')}"></td>
+            <td th:utext="${user.tblInsurance.numberInsurance}"></td>
+            <td >
+                <span th:text="${#dates.format(user.tblInsurance.startDate , 'dd/MM/yyyy')}"></span>
+                <span > ~ </span>
+                                    <span th:text="${#dates.format(user.tblInsurance.endDate, 'dd/MM/yyyy')}"></span>
+
+            </td>
+            <td th:utext="${user.tblInsurance.register}"></td>
+        </tr>
+    </div>
+        <div th:if="${userList.size() == 0}">
+         <tr>
+             <td colspan="9" style="color: red" align="center">Không có thẻ bảo hiểm nào
+             </td>
+         </tr>
+        </div>
+    </table>
+
+    <span th:if="${currentPage  &gt; 1}">
+            <a th:href="@{/home/{page}(page=${currentPage}-1)}">&lt;&lt;</a>
+        </span>
+    <span th:if="${endPage &gt; 0 }">
+            <span th:each="i : ${listPage}">
+                <span th:with="condition=${currentPage  == i}" th:remove="tag">
+                    <span th:if="${condition}"  th:text="${i}"></span>
+                    <a th:unless="${condition}" th:href="@{/home/{page}(page=${i})}" th:text="${i}"></a>
+                </span>
+            </span>
+        </span>
+    <span th:if="${currentPage  &lt; totalPage}">
+            <a th:href="@{/home/{page}(page=${currentPage}+1)}">&gt;&gt;</a>
+        </span>
 </div>
 </body>
 </html>

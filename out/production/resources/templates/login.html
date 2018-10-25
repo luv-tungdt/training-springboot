@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Person List</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/JavaScript.js"></script>
 </head>
 <body>
 <h3>Danh sách thẻ bảo hiểm</h3>
@@ -11,13 +14,15 @@
     <table border="1">
         <h3>Tên công ty</h3>
 
-        <select>
-            <option th:each="company:${tblCompanies}" th:value="${company.id}" th:utext="${company.name}"></option>
-        </select>
-
     </table>
-    <form action="home" th:object="${searchForm}" method="get">
+    <form th:action="@{/home}" th:object="${searchForm}" method="get">
+
         <table class="tbl_input" cellpadding="4" cellspacing="0" width="400px">
+            <select th:field="*{companyId}">
+                <option   th:each="company:${listCompany}" th:value="${company.id}" th:utext="${company.name}" >
+
+                </option>
+            </select>
 
             <tr>
                 <th width="150px">&nbsp;</th>
@@ -59,32 +64,32 @@
                 </td>
             </tr>
             <tr>
-                <td><input class="btn btn_wider" type="button" value="Đăng ký"/></td>
-
+                <td><input class ="addUser" type="button" value="Đăng ký" th:href="@{/add}"/>
+                </td>
+                <td align="right" ><input class="btn btn_wider" type="button" value="exportCSV"/></td>
 
             </tr>
 
         </table>
     </form>
-    <!--<div th:if="${}">-->
-    <!--<div ></div>-->
-    <!--</div>-->
 
     <table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
            width="80%">
 
         <tr class="tr2">
-            <th align="center">Tên người sử dụng
-                <!--<c:choose>-->
-                <!--<c:when test="${sortByFullName == 'ASC'}">-->
-                <!--<a href="ListUser.do?type=sort&sortType=name&sort=DESC">▲▽</a>-->
-                <a th:href="@{/sort}">▲▽</a><br/>
-
-                <!--</c:when>-->
-                <!--<c:otherwise>-->
-                <!--<a href="ListUser.do?type=sort&sortType=name&sort=ASC">△▼</a>-->
-                <!--</c:otherwise>-->
-                <!--</c:choose>-->
+            <th align="left">Tên người sử dụng
+                <div th:with="condition=${sort eq 'ASC' }" th:remove="tag">
+                    <span th:if="${condition}">▲</span> <a
+                        th:unless="${condition}"
+                        th:href="@{/home/(sort=ASC)}">
+                    ▲ </a>
+                </div>
+                <div th:with="condition=${sort eq 'DESC'}" th:remove="tag">
+                    <span th:if="${condition}">▼</span> <a
+                        th:unless="${condition}"
+                        th:href="@{/home/(sort=DESC)}">
+                    ▼ </a>
+                </div>
             </th>
             <th align="left">Giới tính</th>
             <th align="left">Ngày sinh</th>
@@ -93,66 +98,43 @@
             <th align="left">Nơi đăng kí KCB</th>
 
         </tr>
-        <!--<tr th:each="user:${tblUsers}">-->
-        <tr th:each="user:${tblUserList2}">
+        <div th:if="${userList.size() != 0}">
+        <tr th:each="user : ${userList}">
             <td th:utext="${user.userFullName}"></td>
             <td th:utext="${user.userSexDivision}"></td>
-            <td th:utext="${user.date}"></td>
+            <td th:utext="${#dates.format(user.date, 'dd/MM/yyyy')}"></td>
             <td th:utext="${user.tblInsurance.numberInsurance}"></td>
-            <td th:utext="${user.tblInsurance.endDate}"></td>
+            <td >
+                <span th:text="${#dates.format(user.tblInsurance.startDate , 'dd/MM/yyyy')}"></span>
+                <span > ~ </span>
+                                    <span th:text="${#dates.format(user.tblInsurance.endDate, 'dd/MM/yyyy')}"></span>
+
+            </td>
             <td th:utext="${user.tblInsurance.register}"></td>
         </tr>
-        <!--<c:if test="${not empty listUsers }">-->
-        <!--<c:forEach items="${ listUsers }" var="user">-->
-        <!--<tr>-->
-        <!--<td align="right"><a-->
-        <!--href="DetailUserController.do?userId=${user.userId}"></a></td>-->
-        <!--<td>-->
-        <!--<c:out value="${user.fullName}"></c:out>-->
-        <!--</td>-->
-        <!--<td align="center">-->
-        <!--<fmt:formatDate pattern="yyyy/MM/dd"-->
-        <!--value="${user.birthDay}"/>-->
-        <!--</td>-->
-        <!--<td></td>-->
-        <!--<td></td>-->
-        <!--<td th:each="user:${tblUsers}">-->
-        <!--<label th:utext="${user.username}"></label>-->
-        <!--</td>-->
-        <!--</tr>-->
-        <!--</c:forEach>-->
-        <!--</c:if>-->
-        <!--<c:if test="${empty listUsers}">-->
-        <!--<tr>-->
-        <!--<td colspan="9" style="color: red" align="center">${notUser}</td>-->
-        <!--</tr>-->
-        <!--</c:if>-->
+    </div>
+        <div th:if="${userList.size() == 0}">
+         <tr>
+             <td colspan="9" style="color: red" align="center">Không có thẻ bảo hiểm nào
+             </td>
+         </tr>
+        </div>
     </table>
-    <!--<div th:if="${}">-->
-    <!--<div ></div>-->
-    <!--</div>-->
-    <!--<div>-->
-    <!--<table>-->
-        <!--<tr>-->
-            <!--<c:if th:if="${totalPaging > 1}">-->
-                <!--<td class="lbl_paging"><c:if test="${pagingFirst > limitPage}">-->
-                    <!--<a-->
-                            <!--href="ListUser.do?type=page&pageType=${pagingFirst - limitPage}">&lsaquo;&lsaquo;</a>-->
-                <!--</c:if> <c:forEach items="${listPages}" var="Paging">-->
-                    <!--<c:if test="${Paging == currentPage}">-->
-                        <!--<span>${currentPage} &nbsp;&#124;</span>-->
-                    <!--</c:if>-->
-                    <!--<c:if test="${Paging != currentPage}">-->
-                        <!--<a href="ListUser.do?type=page&pageType=${Paging}">${Paging}</a>-->
-                        <!--&nbsp;&#124;-->
-                    <!--</c:if>-->
-                <!--</c:forEach> <c:if test="${pagingFirst +limitPage <= totalPaging}">-->
-                    <!--<a href="ListUser.do?type=page&pageType=${pagingFirst +limitPage}">&rsaquo;&rsaquo;</a>-->
-                <!--</c:if></td>-->
-            <!--</c:if>-->
-        <!--</tr>-->
-    <!--</table>-->
-    <!--</div>-->
+
+    <span th:if="${currentPage  &gt; 1}">
+            <a th:href="@{/home/{page}(page=${currentPage}-1)}">&lt;&lt;</a>
+        </span>
+    <span th:if="${endPage &gt; 0 }">
+            <span th:each="i : ${listPage}">
+                <span th:with="condition=${currentPage  == i}" th:remove="tag">
+                    <span th:if="${condition}"  th:text="${i}"></span>
+                    <a th:unless="${condition}" th:href="@{/home/{page}(page=${i})}" th:text="${i}"></a>
+                </span>
+            </span>
+        </span>
+    <span th:if="${currentPage  &lt; totalPage}">
+            <a th:href="@{/home/{page}(page=${currentPage}+1)}">&gt;&gt;</a>
+        </span>
 </div>
 </body>
 </html>

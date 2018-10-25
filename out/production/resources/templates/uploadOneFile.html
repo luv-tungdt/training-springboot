@@ -1,28 +1,245 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<title>Add user</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/company_info_form.js"></script>
+<style>
+    body {
+        width: 100%;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <title>Upload One File</title>
-</head>
+    td {
+        padding: 5px;
+    }
 
+    #main {
+        padding-top: 20px;
+        margin-left: 100px;
+    }
+
+    button {
+        margin-top: 10px;
+        margin-left: 30px;
+    }
+</style>
 <body>
-<th:block th:include="/_menu"></th:block>
+<div th:replace="header::header"></div>
+<div id="main"><p>ThÃªm má»›i thÃ´ng tin tháº» báº£o hiá»ƒm</p>
+    <p></p>
+    <form method="POST" th:action="@{/addInsurance}" th:object="${registerInsuranceRequest}"
+          onkeypress="return dontSubmit()">
+        <p style="color:red" th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        <table>
+            <tr>
+                <td><label>MÃ£ sá»‘ tháº» báº£o hiá»ƒm</label></td>
+                <td><input th:field="*{insuranceNumber}" type="text" min="10" max="10"/></td>
+                <td><label>(format: 10 chá»¯ sá»‘)</label></td>
+            </tr>
+            <tr>
+                <td><label>Há»� vÃ  tÃªn</label></td>
+                <td><input th:field="*{userFullName}" type="text" id="user_full_name"/></td>
+            </tr>
+            <tr>
+                <td><label>TÃªn Ä‘Äƒng nháº­p</label></td>
+                <td><input th:field="*{userName}" type="text"/></td>
+            </tr>
+            <tr>
+                <td><label>Máº­t kháº©u</label></td>
+                <td><input th:field="*{password}" type="password"/></td>
+            </tr>
+            <tr>
+                <td><label>XÃ¡c nháº­n máº­t kháº©u</label></td>
+                <td><input th:field="*{rePassword}" type="password"/></td>
+            </tr>
+            <tr>
+                <td><label>Giá»›i tÃ­nh</label></td>
+                <td><label id="label_male"><input id="radio_male" th:field="*{userSexDivision}" type="radio"
+                                                  th:value="1"
+                                                  th:checked="*{userSexDivision == '1'}"/>Nam</label>
+                    <label id="label_female"><input id="radio_female" th:field="*{userSexDivision}" type="radio"
+                                                    th:value="2" th:checked="*{userSexDivision=='2'}"/>Ná»¯</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>NgÃ y sinh</label></td>
+                <td><input th:field="*{birthDate}" type="text" class="datepicker"/></td>
+                <td><label>(format: dd/MM/yyyy)</label></td>
+            </tr>
+            <tr id="tr_button_exist_company">
+                <td></td>
+                <td><label>
+                    <input th:field="*{companyFlag}" id="radio_button_exist_company" type="radio"
+                           th:value="true" th:checked="*{companyFlag == true}"/>CÃ´ng ty Ä‘Ã£ cÃ³</label>
+                    <input type="hidden" id="company_flag" th:value="*{companyFlag}"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label>CÃ´ng ty</label></td>
+                <td><select th:field="*{companyInternalId}" id="company_internal_id">
+                    <option th:each="company:${company_list}" th:value="${company.companyInternalId}"
+                            th:utext="${company.companyName}"></option>
+                </select></td>
+            </tr>
+            <tr id="exist_company">
+                <td></td>
+                <td>
+                    <table>
+                        <tr>
+                            <td><label>TÃªn cÃ´ng ty</label></td>
+                            <td><label th:utext="${company.companyName}"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Ä�á»‹a chá»‰</label></td>
+                            <td><label th:utext="${company.address}"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Email</label></td>
+                            <td><label th:utext="${company.email}"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Ä�iá»‡n thoáº¡i</label></td>
+                            <td><label th:utext="${company.telephone}"></label></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr id="tr_button_new_company">
+                <td></td>
+                <td>
+                    <label><input th:field="*{companyFlag}" id="radio_button_new_company" type="radio"
+                                  th:value="false" th:checked="*{companyFlag == false}"/>Ä�Äƒng kÃ½ theo cÃ´ng ty
+                        má»›i</label></td>
+            </tr>
+            <tr id="new_company">
+                <td></td>
+                <td>
+                    <table>
+                        <tr>
+                            <td><label>TÃªn cÃ´ng ty</label></td>
+                            <td><input th:field="*{companyName}" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Ä�á»‹a chá»‰</label></td>
+                            <td><input th:field="*{companyAddress}" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Email</label></td>
+                            <td><input th:field="*{companyEmail}" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td><label>Ä�iá»‡n thoáº¡i</label></td>
+                            <td><input th:field="*{companyTelephone}" type="text"/></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><label>NÆ¡i Ä‘Äƒng kÃ½ KCB</label></td>
+                <td><input th:field="*{placeOfRegister}" type="text"/></td>
+            </tr>
+            <tr>
+                <td><label>NgÃ y báº¯t Ä‘áº§u tháº» BH</label></td>
+                <td><input th:field="*{insuranceStartDate}" type="text" class="datepicker"/></td>
+                <td><label>(format: dd/MM/yyyy)</label></td>
+            </tr>
+            <tr>
+                <td><label>NgÃ y káº¿t thÃºc tháº» BH</label></td>
+                <td><input th:field="*{insuranceEndDate}" type="text" class="datepicker"/></td>
+                <td><label>(format: dd/MM/yyyy)</label></td>
+            </tr>
+        </table>
+        <input type="button" onclick="location.href='/listInsurance?action=back'" value="Há»§y"/>
+        <input type="submit" value="Ä�Äƒng kÃ½"/>
+    </form>
+</div>
+<script>
+    $(function () {
+        var companyFlag = $("#company_flag").val();
+        if (companyFlag) {
+            $("#exist_company").css("display", "contents");
+            $("#new_company").css("display", "none");
+        } else {
+            $("#exist_company").css("display", "none");
+            $("#new_company").css("display", "contents");
+        }
+        $(".datepicker").datepicker({
+            showOn: "button",
+            buttonImage: "images/calendar.png",
+            buttonImageOnly: true,
+            dateFormat: "dd/mm/yy"
+        });
+    });
+    $("#tr_button_exist_company").click(function () {
+        $("#radio_button_new_company").prop("checked", false);
+        $("#radio_button_exist_company").prop("checked", true);
+        $("#exist_company").css("display", "contents");
+        $("#new_company").css("display", "none");
+    })
+    $("#tr_button_new_company").click(function () {
+        $("#radio_button_new_company").prop("checked", true);
+        $("#radio_button_exist_company").prop("checked", false);
+        $("#exist_company").css("display", "none");
+        $("#new_company").css("display", "contents");
+    })
+    $("#label_male").click(function () {
+        $("#radio_female").prop("checked", false);
+        $("#radio_male").prop("checked", true);
+    })
+    $("#label_female").click(function () {
+        $("#radio_female").prop("checked", true);
+        $("#radio_male").prop("checked", false);
+    })
+    $("#company_internal_id").change(function () {
+        var selectedId = this.options[this.selectedIndex].value;
+        $.ajax({
+            type: "GET",
+            url: "/findCompanyById/" + selectedId,
+            success: function (data) {
+                addExistCompanyInfoForm(data);
+            }
+        })
+    });
 
-<h3>Upload One File:</h3>
+    $("#user_full_name").blur(function () {
+        var old_text = $("#user_full_name").val();
+        formatText("user_full_name", old_text);
+    });
 
-<!-- MyUploadForm -->
+    function dontSubmit() {
+        return !(window.event.keyCode == 13);
+    }
 
-<form th:object="${myUploadForm}" method="POST"
-      action="" enctype="multipart/form-data">
-    Description:
-    <br>
-    <input th:field="*{description}" style="width:300px;"/>
-    <br/><br/>
-    File to upload: <input th:field="*{fileDatas}" type="file"/>
-    <br />
-    <input type="submit" value="Upload">
-</form>
+    function formatText(id, old_text) {
+        $.get("/formatName", {"name": old_text}, function (rs) {
+            $('#' + id).val(rs);
+            alertMessage(rs, old_text);
+        })
+    }
 
+    function alertMessage(new_text, old_text) {
+        if (new_text != old_text) {
+            alert("Há»� vÃ  tÃªn Ä‘Ã£ Ä‘Æ°á»£c format láº¡i chá»‰ chá»©a kÃ½ tá»± la tin vÃ  khÃ´ng dáº¥u")
+        }
+    }
+
+</script>
 </body>
+
 </html>
+
+type: "GET",
+url: "/getCompanyInforById",
+cache: false,
+timeout: 600000,
+success: function (data) {
+
+// var json = "<h4>Ajax Response</h4><pre>"
+        //     + JSON.stringify(data, null, 4) + "</pre>";
+// $('#feedback').html(json);
+//
+// console.log("SUCCESS : ", data);
+// $("#btn-search").prop("disabled", false);
+
+
+}
